@@ -29,7 +29,7 @@ Star[] stars = new Star[STAR_COUNT];
 HashMap<String, Constellation> constellations = new HashMap<String, Constellation>();
 ArrayList<Line> lines = new ArrayList<Line>();
 String constellationStarsCSV = "constellations-zodiac-small.csv";
-String constellationCodesCSV = "constellation-codes-zodiac.csv";
+String constellationCodesCSV = "constellation-codes-zodiac-small.csv";
 
 // Setup function
 void setup() {
@@ -266,7 +266,8 @@ class PlayFinalMelody implements Runnable {
    }
 }
 
-void drawImage(Constellation c) {  
+void drawImage(Constellation c) {
+  fill(255,0);
   shape(c.image, c.imgPosX, c.imgPosY, c.cWidth, c.cHeight);  
 }
 
@@ -335,7 +336,7 @@ void GenerateConstellations() {
       
     constellationTable = loadTable(constellationStarsCSV, "header"); //"header" captures the name of columns
   
-    for (TableRow tr : constellationTable.findRows(conCode, "CON")) { // Foreach enhanced loop to populate ArrayList w coordinates
+    for (TableRow tr : constellationTable.findRows(conCode, "CON")) { // Foreach enhanced loop to populate ArrayList w coordinates //<>//
       
       coordList.add(new PVector(tr.getFloat("RA"),tr.getFloat("DEC"),tr.getFloat("MAG")));
       String starName = tr.getString("NAME");
@@ -380,7 +381,8 @@ void GenerateConstellations() {
     
     Star[] conStars = new Star[coordList.size()];
     
-    for(int starIndex = 0; starIndex > coordList.size(); starIndex++) {
+    
+    for(int starIndex = 0; starIndex < coordList.size(); starIndex++) { //<>//
       conStars[starIndex] = new Star(coordList.get(starIndex).x, coordList.get(starIndex).y, 0, coordList.get(starIndex).z, Notes.CSharp_6, starNames.get(starIndex), conName);
     }
     
