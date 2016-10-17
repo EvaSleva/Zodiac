@@ -1,6 +1,6 @@
 class Star {
   
-  Star(int x, int y, int z, int size, int sound, String id, String constellationName) {
+  Star(float x, float y, float z, float size, int sound, String id, String constellationName) {
     this.x = x;
     this.y = y;
     this.z = z;
@@ -10,9 +10,9 @@ class Star {
     this.constellationName = constellationName;
   }
   
- int x;
- int y;
- int z;
+ float x;
+ float y;
+ float z;
  
  // previous model coordinates
  float pX;
@@ -20,7 +20,7 @@ class Star {
  float pZ;
  
  
- int size;
+ float size;
  int sound;
  String id;
  String constellationName;

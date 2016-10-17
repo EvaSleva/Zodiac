@@ -1,7 +1,7 @@
 
 class Constellation {
  
-  public Constellation(String name, Star[] stars, HashMap<String, ArrayList<String>> map, PImage image) {
+  public Constellation(String name, Star[] stars, HashMap<String, ArrayList<String>> map, PShape image) {
     this.name = name;
     this.stars = stars;
     this.map = map;
@@ -15,13 +15,13 @@ class Constellation {
   boolean melodyPlayed = false;    
   ArrayList<Star> connectionOrder = new ArrayList<Star>();
   
-  PImage image;
+  PShape image;
   boolean showImage = false;
-  int cWidth;
-  int cHeight;
+  float cWidth;
+  float cHeight;
   
-  int imgPosX;
-  int imgPosY;
+  float imgPosX;
+  float imgPosY;
   
   // model image positions
   float mImgPosX;
