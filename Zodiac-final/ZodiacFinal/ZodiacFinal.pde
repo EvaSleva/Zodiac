@@ -342,7 +342,7 @@ void GenerateConstellations() {
       starNames.add(starName);      
       
       String linkString = tr.getString("LINKS");
-      String[] linkArray = linkString.split(",");      
+      String[] linkArray = linkString.split("-");      
       ArrayList<String> linkedStars =  new ArrayList<String>();
 
       for(int indx = 0; indx < linkArray.length; indx++) {
