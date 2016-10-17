@@ -315,7 +315,6 @@ void GenerateConstellations() {
   Table constellationCodeTable;
   constellationCodeTable = loadTable(constellationCodesCSV, "header"); //"header" captures the name of columns
   
-  int i = 0; 
   for (TableRow row : constellationCodeTable.rows()) {
         
     // Get data about constellation
@@ -388,9 +387,6 @@ void GenerateConstellations() {
     Constellation t = new Constellation("Taurus", conStars, starLinks, image);
     constellations.put("Taurus", t);  
     findImagePosition(t);
-    
-    // Look for # rows in Code file
-    i+=1;
   }
   
   
