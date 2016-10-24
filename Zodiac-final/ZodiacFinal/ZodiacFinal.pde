@@ -28,8 +28,8 @@ Star previousStar;
 Star[] stars = new Star[STAR_COUNT];
 HashMap<String, Constellation> constellations = new HashMap<String, Constellation>();
 ArrayList<Line> lines = new ArrayList<Line>();
-String constellationStarsCSV = "constellations-zodiac-small.csv";
-String constellationCodesCSV = "constellation-codes-zodiac-small.csv";
+String constellationStarsCSV = "constellations-zodiac.csv";
+String constellationCodesCSV = "constellation-codes-zodiac.csv";
 
 // Setup function
 void setup() {
@@ -146,7 +146,7 @@ void ProcessStar(Star star, boolean constellationStar) {
         
       // add a line if there should be one
       if(constellationStar) {       
-        if(previousStar != null && CheckStarMapping(star, previousStar, constellations.get(star.constellationName))) {
+        if(previousStar != null && previousStar.constellationName == star.constellationName && CheckStarMapping(star, previousStar, constellations.get(star.constellationName))) { //<>//
           AddLine(previousStar, star, constellations.get(star.constellationName));          
         }    
         // otherwise just draw a line and don't save it
@@ -190,8 +190,8 @@ void ProcessStar(Star star, boolean constellationStar) {
 }
 
 // check if two stars are supposed to be connected
-boolean CheckStarMapping(Star star1, Star star2, Constellation constellation) {
-  return constellation.map.get(star1.id).contains(star2.id);
+boolean CheckStarMapping(Star star1, Star star2, Constellation constellation) { //<>//
+  return constellation.map.get(star1.id).contains(star2.id); //<>//
 }
 
 // check if two star already are connected
@@ -336,7 +336,7 @@ void GenerateConstellations() {
       
     constellationTable = loadTable(constellationStarsCSV, "header"); //"header" captures the name of columns
   
-    for (TableRow tr : constellationTable.findRows(conCode, "CON")) { // Foreach enhanced loop to populate ArrayList w coordinates //<>//
+    for (TableRow tr : constellationTable.findRows(conCode, "CON")) { // Foreach enhanced loop to populate ArrayList w coordinates
       
       coordList.add(new PVector(tr.getFloat("RA"),tr.getFloat("DEC"),tr.getFloat("MAG")));
       String starName = tr.getString("NAME");
@@ -382,72 +382,13 @@ void GenerateConstellations() {
     Star[] conStars = new Star[coordList.size()];
     
     
-    for(int starIndex = 0; starIndex < coordList.size(); starIndex++) { //<>//
+    for(int starIndex = 0; starIndex < coordList.size(); starIndex++) {
       conStars[starIndex] = new Star(coordList.get(starIndex).x, coordList.get(starIndex).y, 0, coordList.get(starIndex).z, Notes.CSharp_6, starNames.get(starIndex), conName);
     }
     
-    Constellation t = new Constellation("Taurus", conStars, starLinks, image);
-    constellations.put("Taurus", t);  
+    Constellation t = new Constellation(conName, conStars, starLinks, image);
+    constellations.put(conName, t);  
     findImagePosition(t);
   }
-  
-  
-  
-  //// Taurus
-  //Star[] taurusStars = new Star[] {
-  //  new Star(200, 108, 0, int(random(CONSTELLATION_STAR_SIZE_MIN, CONSTELLATION_STAR_SIZE_MAX)), Notes.CSharp_6, "t1", "Taurus"),
-  //  new Star(260, 155, 0, int(random(CONSTELLATION_STAR_SIZE_MIN, CONSTELLATION_STAR_SIZE_MAX)), Notes.F_6, "t2", "Taurus"),
-  //  new Star(287, 197, 0, int(random(CONSTELLATION_STAR_SIZE_MIN, CONSTELLATION_STAR_SIZE_MAX)), Notes.GSharp_6, "t3", "Taurus"),
-  //  new Star(265, 219, 0, int(random(CONSTELLATION_STAR_SIZE_MIN, CONSTELLATION_STAR_SIZE_MAX)), Notes.Bb_6, "t4", "Taurus"),
-  //  new Star(172, 180, 0, int(random(CONSTELLATION_STAR_SIZE_MIN, CONSTELLATION_STAR_SIZE_MAX)), Notes.Eb_7, "t5", "Taurus"),
-  //  new Star(297, 217, 0, int(random(CONSTELLATION_STAR_SIZE_MIN, CONSTELLATION_STAR_SIZE_MAX)), Notes.FSharp_6, "t6", "Taurus"),
-  //  new Star(304, 224, 0, int(random(CONSTELLATION_STAR_SIZE_MIN, CONSTELLATION_STAR_SIZE_MAX)), Notes.CSharp_6, "t7", "Taurus"),
-  //  new Star(389, 195, 0, int(random(CONSTELLATION_STAR_SIZE_MIN, CONSTELLATION_STAR_SIZE_MAX)), Notes.F_6, "t8", "Taurus"),
-  //  new Star(308, 246, 0, int(random(CONSTELLATION_STAR_SIZE_MIN, CONSTELLATION_STAR_SIZE_MAX)), Notes.GSharp_6, "t9", "Taurus"),
-  //  new Star(283, 236, 0, int(random(CONSTELLATION_STAR_SIZE_MIN, CONSTELLATION_STAR_SIZE_MAX)), Notes.Bb_6, "t10", "Taurus"),
-  //  new Star(340, 283, 0, int(random(CONSTELLATION_STAR_SIZE_MIN, CONSTELLATION_STAR_SIZE_MAX)), Notes.Eb_7, "t11", "Taurus"),
-  //  new Star(390, 320, 0, int(random(CONSTELLATION_STAR_SIZE_MIN, CONSTELLATION_STAR_SIZE_MAX)), Notes.FSharp_6, "t12", "Taurus"),
-  //  new Star(381, 303, 0, int(random(CONSTELLATION_STAR_SIZE_MIN, CONSTELLATION_STAR_SIZE_MAX)), Notes.CSharp_6, "t13", "Taurus")
-  //};
-  
-  //// Specify which stars should connect
-  //HashMap<String, ArrayList<String>> tMap = new HashMap<String, ArrayList<String>>();
-  //tMap.put("t1", new ArrayList<String>() {{ add("t2"); }});
-  //tMap.put("t2", new ArrayList<String>() {{ add("t1"); add("t3"); }});
-  //tMap.put("t3", new ArrayList<String>() {{ add("t2"); add("t4"); add("t6"); }});
-  //tMap.put("t4", new ArrayList<String>() {{ add("t3"); add("t5"); add("t10"); }});
-  //tMap.put("t5", new ArrayList<String>() {{ add("t4"); }});
-  //tMap.put("t6", new ArrayList<String>() {{ add("t3"); add("t7"); }});
-  //tMap.put("t7", new ArrayList<String>() {{ add("t6"); add("t8"); add("t9"); }});
-  //tMap.put("t8", new ArrayList<String>() {{ add("t7"); }});
-  //tMap.put("t9", new ArrayList<String>() {{ add("t7"); add("t10"); add("t11"); }});
-  //tMap.put("t10", new ArrayList<String>() {{ add("t9"); add("t4"); }});
-  //tMap.put("t11", new ArrayList<String>() {{ add("t9"); add("t12"); }});
-  //tMap.put("t12", new ArrayList<String>() {{ add("t11"); add("t13"); }});
-  //tMap.put("t13", new ArrayList<String>() {{ add("t12"); }});
-  
-  //Constellation t = new Constellation("Taurus", taurusStars, tMap, loadImage("taurus.png"));
-  //constellations.put("Taurus", t);  
-  //findImagePosition(t);
-  
-  
-  //// Cassiopeia
-  //Star[] CassiopeiaStars = new Star[] {
-  //  new Star(718, 502, 0, int(random(CONSTELLATION_STAR_SIZE_MIN, CONSTELLATION_STAR_SIZE_MAX)), 1567, "c1", "Cassiopeia"),
-  //  new Star(768, 562, 0, int(random(CONSTELLATION_STAR_SIZE_MIN, CONSTELLATION_STAR_SIZE_MAX)), 1975, "c2", "Cassiopeia"),
-  //  new Star(846, 561, 0, int(random(CONSTELLATION_STAR_SIZE_MIN, CONSTELLATION_STAR_SIZE_MAX)), 2349, "c3", "Cassiopeia"),
-  //  new Star(883, 620, 0, int(random(CONSTELLATION_STAR_SIZE_MIN, CONSTELLATION_STAR_SIZE_MAX)), 3135, "c4", "Cassiopeia"),
-  //  new Star(936, 572, 0, int(random(CONSTELLATION_STAR_SIZE_MIN, CONSTELLATION_STAR_SIZE_MAX)), 3951, "c5", "Cassiopeia")
-  //};
-  
-  //HashMap<String, ArrayList<String>> cMap = new HashMap<String, ArrayList<String>>();
-  //cMap.put("c1", new ArrayList<String>() {{ add("c2"); }});
-  //cMap.put("c2", new ArrayList<String>() {{ add("c1"); add("c3"); }});
-  //cMap.put("c3", new ArrayList<String>() {{ add("c2"); add("c4"); }});
-  //cMap.put("c4", new ArrayList<String>() {{ add("c3"); add("c5"); }});
-  //cMap.put("c5", new ArrayList<String>() {{ add("c4"); }});
-  
-  //Constellation c = new Constellation("Cassiopeia", CassiopeiaStars, cMap, loadImage("Cassiopeia.png"));
-  //constellations.put("Cassiopeia", c);
-  //findImagePosition(c);
+
 }
