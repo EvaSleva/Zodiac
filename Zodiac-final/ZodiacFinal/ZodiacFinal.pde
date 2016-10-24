@@ -23,6 +23,7 @@ float MAX_STAR_SOUND = 1500;
 float MIN_STAR_SOUND = 1000;
 float SCREEN_MARGIN_X = width*0.2;
 float SCREEN_MARGIN_Y = height*0.2;
+int RANDOM_STAR_NOTE = 55;
 Star previousStar;
 
 Star[] stars = new Star[STAR_COUNT];
@@ -307,7 +308,7 @@ void PlayBackgroundMusic() {
 void GenerateStars() {
   // generate random stars
   for(int i = 0; i < STAR_COUNT; i++) {
-     stars[i] = new Star(int(random(-width, width)), int(random(-height, height)), int(random(-height, height)), int(random(MIN_STAR_SIZE, MAX_STAR_SIZE)), int(random(MIN_STAR_SOUND, MAX_STAR_SOUND)), "", "");
+     stars[i] = new Star(int(random(-width, width)), int(random(-height, height)), int(random(-height, height)), int(random(MIN_STAR_SIZE, MAX_STAR_SIZE)), RANDOM_STAR_NOTE, "", "");
   }
 }
 
