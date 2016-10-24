@@ -332,6 +332,7 @@ void GenerateConstellations() {
     Table constellationTable;
     ArrayList<PVector> coordList = new ArrayList<PVector>();
     ArrayList<String> starNames = new ArrayList<String>();
+    ArrayList<Integer> notes = new ArrayList<Integer>();
     HashMap<String, ArrayList<String>> starLinks = new HashMap<String, ArrayList<String>>();
       
     constellationTable = loadTable(constellationStarsCSV, "header"); //"header" captures the name of columns
@@ -341,6 +342,9 @@ void GenerateConstellations() {
       coordList.add(new PVector(tr.getFloat("RA"),tr.getFloat("DEC"),tr.getFloat("MAG")));
       String starName = tr.getString("NAME");
       starNames.add(starName);      
+      
+      Integer note = tr.getInt("noteNUM");
+      notes.add(note);
       
       String linkString = tr.getString("LINKS");
       String[] linkArray = linkString.split("-");      
@@ -383,7 +387,7 @@ void GenerateConstellations() {
     
     
     for(int starIndex = 0; starIndex < coordList.size(); starIndex++) {
-      conStars[starIndex] = new Star(coordList.get(starIndex).x, coordList.get(starIndex).y, 0, coordList.get(starIndex).z, Notes.CSharp_6, starNames.get(starIndex), conName);
+      conStars[starIndex] = new Star(coordList.get(starIndex).x, coordList.get(starIndex).y, 0, coordList.get(starIndex).z, notes.get(starIndex), starNames.get(starIndex), conName);
     }
     
     Constellation t = new Constellation(conName, conStars, starLinks, image);
