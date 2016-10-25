@@ -21,8 +21,8 @@ int CONSTELLATION_STAR_SIZE_MIN = 6;
 int CONSTELLATION_STAR_SIZE_MAX = 8;
 float MAX_STAR_SOUND = 1500;
 float MIN_STAR_SOUND = 1000;
-float SCREEN_MARGIN_X = width*0.2;
-float SCREEN_MARGIN_Y = height*0.2;
+float SCREEN_MARGIN_X = width*0.1;
+float SCREEN_MARGIN_Y = height*0.1;
 int RANDOM_STAR_NOTE = 55;
 Star previousStar;
 
@@ -380,6 +380,9 @@ void GenerateConstellations() {
       float x = map(coordList.get(index).x, minMax[0], minMax[1], width-SCREEN_MARGIN_X, SCREEN_MARGIN_X);
       float y = map(coordList.get(index).y, minMax[2], minMax[3], height-SCREEN_MARGIN_Y, SCREEN_MARGIN_Y);
       float z = map(coordList.get(index).z, minMax[4], minMax[5], CONSTELLATION_STAR_SIZE_MIN, CONSTELLATION_STAR_SIZE_MAX);
+      // let's centre the map
+      x = x-width/2;
+      y = y-height/2;
       PVector p = new PVector(x,y,z);
       coordList.set(index, p);
     }
