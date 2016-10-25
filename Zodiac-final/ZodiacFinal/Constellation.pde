@@ -1,4 +1,4 @@
-
+  
 class Constellation {
  
   public Constellation(String name, Star[] stars, HashMap<String, ArrayList<String>> map, PShape image) {
