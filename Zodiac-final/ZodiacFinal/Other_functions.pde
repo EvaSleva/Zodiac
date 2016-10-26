@@ -12,6 +12,7 @@ boolean CheckStarConnection(Star star1, Star star2) {
 }
 
 boolean CheckConstellationComplete(Constellation c) {
+
   for(int i = 0; i < c.stars.length; i++) {
     for(int z = 0; z < c.map.get(c.stars[i].id).size(); z++) {
       if(!c.stars[i].connections.contains(c.map.get(c.stars[i].id).get(z))) {
@@ -26,7 +27,7 @@ boolean CheckConstellationComplete(Constellation c) {
 // add a line to the lines array, if they should
 void AddLine(Star star1, Star star2, Constellation constellation) {
   
-  if(!CheckStarConnection(star1, star2)) { //<>//
+  if(!CheckStarConnection(star1, star2)) {
     // add stars to connection order arrays
     if (constellation.connectionOrder.size() != 0 && constellation.connectionOrder.get(constellation.connectionOrder.size() - 1).id == star1.id) {
       constellation.connectionOrder.add(star2);
@@ -50,6 +51,8 @@ void AddLine(Star star1, Star star2, Constellation constellation) {
 }
 
 void AddAllLines(Constellation c) {
+  println(c.name);
+  
   Iterator<Entry<String, ArrayList<String>>> iter = c.map.entrySet().iterator();     
   while(iter.hasNext()) {
     Entry<String, ArrayList<String>> entry = iter.next();
