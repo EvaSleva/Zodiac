@@ -9,6 +9,7 @@ import java.util.Map.Entry;
 OscP5 oscP5;
 NetAddress myRemoteLocation;
 NetAddress myRemoteLocationBackground;
+PImage bgImage;
 
 int STAR_COUNT = 50;
 int TOUCH_MARGIN = 5;
@@ -25,7 +26,7 @@ float STAR_TOUCHED_SIZE = 0.25;
 Star previousStar;
 float rotation = 0;
 int constellationsShown = 0;
-int noOfConstellationsOnScreen = 1;
+int noOfConstellationsOnScreen = 10;
 
 Star[] stars = new Star[STAR_COUNT];
   HashMap<String, Constellation> constellations = new HashMap<String, Constellation>();
@@ -37,8 +38,9 @@ String constellationCodesCSV = "constellation-codes-zodiac.csv";
 // ----- Setup function -----
 
 void setup() {
-  size(1200, 750, P3D);
+  size(1920, 1080, P3D);
   noStroke();
+  bgImage = loadImage("green-bg.jpg");
   
   // intialize network variables
   oscP5 = new OscP5(this,12345); // incoming on 12345
@@ -56,7 +58,7 @@ void setup() {
 // -----  draw function -----
 
 void draw() {
-  background(0);
+  background(bgImage);
   lights();
   
   // camera rotation
@@ -120,7 +122,9 @@ void draw() {
   
 }
 
+// Enter for changing constellation, 's' for completing constellation
 void keyPressed() {
+  
    if(key == ENTER) {
      if(constellationsShown + noOfConstellationsOnScreen <= constellations.size()) {
        constellationsShown += noOfConstellationsOnScreen;
@@ -143,6 +147,7 @@ void keyPressed() {
        }
      }
    }
+   
    
    if(key == 's') {
      Iterator<Entry<String, Constellation>> iter = constellations.entrySet().iterator();

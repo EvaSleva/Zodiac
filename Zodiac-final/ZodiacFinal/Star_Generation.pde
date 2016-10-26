@@ -24,7 +24,8 @@ void GenerateConstellations() {
     float sizeY = row.getFloat("sizeY");
     float posX = row.getFloat("posX");
     float posY = row.getFloat("posY");
-   
+    float posZ = row.getFloat("posZ");
+    
     String svgImageFile = conName.toLowerCase() + ".svg";     
     PShape image = loadShape(svgImageFile);
     image.disableStyle();
@@ -81,8 +82,8 @@ void GenerateConstellations() {
         float y = map(coordList.get(index).y, minMax[2], minMax[3], height*posY+height*sizeY, height*posY);
         float z = map(coordList.get(index).z, minMax[4], minMax[5], CONSTELLATION_STAR_SIZE_MIN, CONSTELLATION_STAR_SIZE_MAX);
         // let's centre the map
-        x = x-width/2;
-        y = y-height/2;
+        x = x-width;
+        y = y-height;
         PVector p = new PVector(x,y,z);
         coordList.set(index, p);
       }
@@ -105,7 +106,7 @@ void GenerateConstellations() {
     
     for(int starIndex = 0; starIndex < coordList.size(); starIndex++) {
       conStars[starIndex] = 
-      new Star(coordList.get(starIndex).x, coordList.get(starIndex).y, 0, coordList.get(starIndex).z, notes.get(starIndex), starNames.get(starIndex), conName);
+      new Star(coordList.get(starIndex).x, coordList.get(starIndex).y, posZ, coordList.get(starIndex).z, notes.get(starIndex), starNames.get(starIndex), conName);
     }
     
     Constellation t = new Constellation(conName, conStars, starLinks, image);
