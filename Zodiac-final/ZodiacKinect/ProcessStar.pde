@@ -34,17 +34,14 @@ void ProcessStar(Star star, boolean constellationStar) {
     
     PVector position = getJointPosition(SimpleOpenNI.SKEL_LEFT_HAND);
     
-//    if((position.x >= (star.x - TOUCH_MARGIN) && position.x <= (star.x + TOUCH_MARGIN)) 
-//    && (position.y >= (star.y - TOUCH_MARGIN) && position.y <= (star.y + TOUCH_MARGIN))
-//    && (position.z >= (star.z - TOUCH_MARGIN) && position.z <= (star.z + TOUCH_MARGIN))) {
-  
-      if((position.x >= (x - TOUCH_MARGIN) && position.x <= (x + TOUCH_MARGIN)) 
-    && (position.y >= (y - TOUCH_MARGIN) && position.y <= (y + TOUCH_MARGIN))) {
-    
+    if((position.x >= (star.x - TOUCH_MARGIN) && position.x <= (star.x + TOUCH_MARGIN)) 
+    && (position.y >= (star.y - TOUCH_MARGIN) && position.y <= (star.y + TOUCH_MARGIN))
+    && (position.z-1000 >= (star.z - TOUCH_MARGIN_Z) && position.z-1000 <= (star.z + TOUCH_MARGIN_Z))) {   
     
     
     // check if mouse touches star
-//    if((mouseX >= (x - TOUCH_MARGIN) && mouseX <= (x + TOUCH_MARGIN)) && (mouseY >= (y - TOUCH_MARGIN) && mouseY <= (y + TOUCH_MARGIN))) {
+//    if((mouseX >= (x - TOUCH_MARGIN) && mouseX <= (x + TOUCH_MARGIN)) 
+ //   && (mouseY >= (y - TOUCH_MARGIN) && mouseY <= (y + TOUCH_MARGIN))) {
       
       // set to chosen star
       if(previousStar != null) {
