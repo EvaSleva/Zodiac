@@ -3,7 +3,8 @@
 void GenerateStars() {
   // generate random stars
   for(int i = 0; i < STAR_COUNT; i++) {
-     stars[i] = new Star(int(random(-width, width)), int(random(-height, height)), int(random(-height, height)), int(random(MIN_STAR_SIZE, MAX_STAR_SIZE)), RANDOM_STAR_NOTE, "", "");
+     stars[i] = 
+     new Star(int(random(-width, width)), int(random(-height, height)), int(random(-height, height)), int(random(MIN_STAR_SIZE, MAX_STAR_SIZE)), RANDOM_STAR_NOTE, "", "");
   }
 }
 
@@ -19,6 +20,10 @@ void GenerateConstellations() {
     String conName = row.getString("CONNAME");
     String conColourHex = row.getString("COLOUR");
     color conColour =  unhex(conColourHex);  
+    float sizeX = row.getFloat("sizeX");
+    float sizeY = row.getFloat("sizeY");
+    float posX = row.getFloat("posX");
+    float posY = row.getFloat("posY");
    
     String svgImageFile = conName.toLowerCase() + ".svg";     
     PShape image = loadShape(svgImageFile);
@@ -65,28 +70,42 @@ void GenerateConstellations() {
     }
     
     float[] minMax = new float[6]; 
-    
     minMax[0] = min(xPos); minMax[1] = max(xPos);
     minMax[2] = min(yPos); minMax[3] = max(yPos);
     minMax[4] = min(zPos); minMax[5] = max(zPos);
     
-    // map(); the constellation to screen size
-    for(int index = 0; index < coordList.size(); index++) {
-      float x = map(coordList.get(index).x, minMax[0], minMax[1], width-SCREEN_MARGIN_X, SCREEN_MARGIN_X);
-      float y = map(coordList.get(index).y, minMax[2], minMax[3], height-SCREEN_MARGIN_Y, SCREEN_MARGIN_Y);
-      float z = map(coordList.get(index).z, minMax[4], minMax[5], CONSTELLATION_STAR_SIZE_MIN, CONSTELLATION_STAR_SIZE_MAX);
-      // let's centre the map
-      x = x-width/2;
-      y = y-height/2;
-      PVector p = new PVector(x,y,z);
-      coordList.set(index, p);
+    if (USE_CSV_POSITIONS) {
+      // map the constellations according to values from csv
+      for(int index = 0; index < coordList.size(); index++) {
+        float x = map(coordList.get(index).x, minMax[0], minMax[1], width*posX+width*sizeX, width*posX);
+        float y = map(coordList.get(index).y, minMax[2], minMax[3], height*posY+height*sizeY, height*posY);
+        float z = map(coordList.get(index).z, minMax[4], minMax[5], CONSTELLATION_STAR_SIZE_MIN, CONSTELLATION_STAR_SIZE_MAX);
+        // let's centre the map
+        x = x-width/2;
+        y = y-height/2;
+        PVector p = new PVector(x,y,z);
+        coordList.set(index, p);
+      }
+    }
+    else {      
+      // map(); the constellation to screen size
+      for(int index = 0; index < coordList.size(); index++) {
+        float x = map(coordList.get(index).x, minMax[0], minMax[1], width-SCREEN_MARGIN_X, SCREEN_MARGIN_X);
+        float y = map(coordList.get(index).y, minMax[2], minMax[3], height-SCREEN_MARGIN_Y, SCREEN_MARGIN_Y);
+        float z = map(coordList.get(index).z, minMax[4], minMax[5], CONSTELLATION_STAR_SIZE_MIN, CONSTELLATION_STAR_SIZE_MAX);
+        // let's centre the map
+        x = x-width/2;
+        y = y-height/2;
+        PVector p = new PVector(x,y,z);
+        coordList.set(index, p);
+      }
     }
     
-    Star[] conStars = new Star[coordList.size()];
-    
+    Star[] conStars = new Star[coordList.size()];    
     
     for(int starIndex = 0; starIndex < coordList.size(); starIndex++) {
-      conStars[starIndex] = new Star(coordList.get(starIndex).x, coordList.get(starIndex).y, 0, coordList.get(starIndex).z, notes.get(starIndex), starNames.get(starIndex), conName);
+      conStars[starIndex] = 
+      new Star(coordList.get(starIndex).x, coordList.get(starIndex).y, 0, coordList.get(starIndex).z, notes.get(starIndex), starNames.get(starIndex), conName);
     }
     
     Constellation t = new Constellation(conName, conStars, starLinks, image);

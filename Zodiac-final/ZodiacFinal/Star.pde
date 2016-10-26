@@ -8,6 +8,7 @@ class Star {
     this.sound = sound;
     this.id = id;  
     this.constellationName = constellationName;
+    this.originalSize = size;
   }
   
  float x;
@@ -21,11 +22,13 @@ class Star {
  
  
  float size;
+ float originalSize;;
  int sound;
  String id;
  String constellationName;
  boolean chosen = false;
  boolean soundPlayed = false;
+ boolean sizeChanged = false;
  color clr = color(255);
  ArrayList<String> connections = new ArrayList<String>();
  

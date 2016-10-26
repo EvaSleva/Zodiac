@@ -19,6 +19,8 @@ int CONSTELLATION_STAR_SIZE_MAX = 8;
 float SCREEN_MARGIN_X = width*0.1;
 float SCREEN_MARGIN_Y = height*0.1;
 int RANDOM_STAR_NOTE = 55;
+boolean USE_CSV_POSITIONS = true;
+float STAR_TOUCHED_SIZE = 0.25;
 
 Star previousStar;
 float rotation = 0;
@@ -42,7 +44,6 @@ void setup() {
   oscP5 = new OscP5(this,12345); // incoming on 12345
   myRemoteLocation = new NetAddress("127.0.0.1", 12346); // outgoing on 12346
   myRemoteLocationBackground = new NetAddress("127.0.0.1", 12347); // outgoing on 12346
-    
   
   // Generate stars and play background sound
   GenerateStars();

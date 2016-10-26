@@ -103,7 +103,7 @@ class PlayFinalMelody implements Runnable {
 
 
 void drawImage(Constellation c) {
-  fill(255,0);
+  fill(0);
   shape(c.image, c.imgPosX, c.imgPosY, c.cWidth, c.cHeight);  
 }
 
