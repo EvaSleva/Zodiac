@@ -98,7 +98,7 @@ void draw() {
       }
       
       if(c.showImage) {
-        drawImage(c);
+//        drawImage(c);
       }
       
       // check if constellation is complete
