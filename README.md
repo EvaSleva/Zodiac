@@ -1,4 +1,4 @@
-# Zodiac
+# ZODIAC
 
 ## UTS 32027 Interactive Media (2016 Spring)
 
@@ -11,19 +11,27 @@
 
 ### 2. IDEA Description
 
-The Zodiac App will offer a 2D dark sky environment that will present the user with one of 88 constellations. The user is geographically located in the centre of the Earth where only a small viewport of the sky is visible, which allows the user to scroll through in any Cartesian directions. The user will see the stars that constitute one constellation and will join the stars in the correct fashion that is associated to the Zodiac sign in question. Sound effects will be used and chords played for each correct star connection. 
+The Zodiac App will offer a 3D dark sky environment that will present the user with one or more of the 12 main Zodiac constellations. The user is geographically located in the centre of the interface where only a viewport section of the sky is visible at any one time. The user will interact by touching stars to connect them in the correct fashion to join into a single constellation, and once completed the associated Zodiac sign illustration is displayed. Background ambient music and sound effects will be used for each correct star sequence connection and chords played once it is complete.
 
-"The brain is brilliant at joining up stars and seeing patterns - it is, of course, the same logic behind the popular children's puzzle of dot-to-dot. The constellations themselves are just such patterns but the term asterism is today taken as patterns of stars that are not constellations. They can be naked-eye objects, e.g. the Plough (Big Dipper), or telescopic/binocular ones e.g. the Coathanger. The stars can be unrelated chance alignments, e.g. Kemble’s Cascade, or part of a related cluster e.g. ET in NGC 457. There are probably many more out there waiting to be discovered – they really only become obvious when someone makes the connection and draws our attention to them. Oh and a good name helps too." (http://www.deep-sky.co.uk/asterisms.htm)
+### 3. SETUP INSTRUCTIONS
 
-### 3. REFERENCES
+* Requirements
+    - Microsoft Kinect device version 1 (1414) 
+    - Processing software version 2.2.1 (to use SimpleOpenNI-1.96)
+    - Pure Data software (Pd-Extended 0.43.4)
+* Processing Libraries
+    - oscP5 | An Open Sound Control (OSC) 
+    - SimpleOpenNI version 1.96
 
-* Star charts RA/DEC/MAG: http://www.midnightkite.com/index.aspx?AID=0&URL=StarChartFAQ
-* Load CSV data (http://observe.phy.sfasu.edu/SFAStarCharts/ExcelCharts/ConstellationLinesAll2002.xls) that contains:
+### 4. REFERENCES
+
+* Star charts (RA/DEC/MAG) from The Department of Physics and Astronomy at Stephen F. Austin State University: http://www.midnightkite.com/index.aspx?AID=0&URL=StarChartFAQ
+* RA/DEC/MAG CSV data (http://observe.phy.sfasu.edu/SFAStarCharts/ExcelCharts/ConstellationLinesAll2002.xls) that contains:
     - Zodiac codename
     - Magnitude
     - Converted RA/DEC coordinates (https://en.wikipedia.org/wiki/Right_ascension | https://en.wikipedia.org/wiki/Declination) 
 * Background Image: http://www.samsung.com/global/galaxy/galaxy-tab-s2/images/galaxy-tab-s2_feature_your-pick.jpg
-* Zodiac Vectors for SVGs: http://www.freevectors.net/details/Zodiac
+* Zodiac Vectors for SVGs illustrations: http://www.freevectors.net/details/Zodiac
 
 
 
