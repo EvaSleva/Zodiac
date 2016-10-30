@@ -24,7 +24,10 @@ void GenerateConstellations() {
     float sizeY = row.getFloat("sizeY");
     float posX = row.getFloat("posX");
     float posY = row.getFloat("posY");
-    float posZ = row.getFloat("posZ");
+    float posZ = random(-1000, 1000);
+    
+    //String pngImageFile = conName.toLowerCase() + ".png";     
+    //PImage image = loadImage(pngImageFile);
     
     String svgImageFile = conName.toLowerCase() + ".svg";     
     PShape image = loadShape(svgImageFile);

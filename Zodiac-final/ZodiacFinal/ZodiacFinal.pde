@@ -26,7 +26,7 @@ float STAR_TOUCHED_SIZE = 0.25;
 Star previousStar;
 float rotation = 0;
 int constellationsShown = 0;
-int noOfConstellationsOnScreen = 10;
+int noOfConstellationsOnScreen = 1;
 
 Star[] stars = new Star[STAR_COUNT];
   HashMap<String, Constellation> constellations = new HashMap<String, Constellation>();
@@ -98,7 +98,7 @@ void draw() {
       }
       
       if(c.showImage) {
-//        drawImage(c);
+        drawImage(c);
       }
       
       // check if constellation is complete
@@ -141,6 +141,7 @@ void keyPressed() {
        Entry<String, Constellation> entry = iter.next();
        entry.getValue().melodyPlayed = false;
        entry.getValue().complete = false;
+       entry.getValue().showImage = false;
        entry.getValue().connectionOrder = new ArrayList<Star>();
        for(int i = 0; i < entry.getValue().stars.length; i++) {
          entry.getValue().stars[i].connections = new ArrayList<String>();

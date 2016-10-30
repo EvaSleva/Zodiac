@@ -22,10 +22,12 @@ class Constellation {
   
   float imgPosX;
   float imgPosY;
+  float imgPosZ;
   
   // model image positions
   float mImgPosX;
   float mImgPosY;
+  float mImgPosZ;
   
   
 }

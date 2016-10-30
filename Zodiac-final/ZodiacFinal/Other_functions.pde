@@ -107,26 +107,32 @@ class PlayFinalMelody implements Runnable {
 
 void drawImage(Constellation c) {
   fill(200, 200, 200, 50);
-  shape(c.image, c.imgPosX, c.imgPosY, c.cWidth, c.cHeight);  
+  pushMatrix();
+  translate(c.imgPosX, c.imgPosY, c.imgPosZ);
+  shape(c.image, 0, 0, c.cWidth, c.cHeight);
+  popMatrix();
 }
 
 
 // find the right position for the image on the constellation
 void findImagePosition(Constellation c) {
-  float minX = Float.MAX_VALUE, minY = Float.MAX_VALUE;
-  float maxX = 0, maxY = 0;
+  float minX = Float.MAX_VALUE, minY = Float.MAX_VALUE, minZ = Float.MAX_VALUE;
+  float maxX = 0, maxY = 0, maxZ = 0;
   
   for(int i = 0; i < c.stars.length; i++) {
     if(c.stars[i].x < minX) { minX = c.stars[i].x;}
     if(c.stars[i].x > maxX) { maxX = c.stars[i].x;} 
     if(c.stars[i].y < minY) { minY = c.stars[i].y;}
     if(c.stars[i].y > maxY) { maxY = c.stars[i].y;}
+    if(c.stars[i].z < minZ) { minZ = c.stars[i].z;}
+    if(c.stars[i].z > maxZ) { maxZ = c.stars[i].z;}
   }
   
   c.cWidth = maxX-minX;  
   c.cHeight = maxY-minY;
   c.imgPosX = minX;
   c.imgPosY = minY;
+  c.imgPosZ = minZ;
 }
 
 

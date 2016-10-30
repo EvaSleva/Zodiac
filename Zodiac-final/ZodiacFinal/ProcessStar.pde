@@ -71,17 +71,18 @@ void ProcessStar(Star star, boolean constellationStar) {
     star.soundPlayed = false;
   }     
   
-  // check if constellation is done and mouse is clicked on the constellation, then play the melody (position not working properly in 3D)
+  // check if constellation is done and mouse is clicked on the constellation, then play the melody (position not working properly in 3D?)
   if(constellationStar && mousePressed && constellations.get(star.constellationName).complete) {
      Constellation c = constellations.get(star.constellationName); 
      
      pushMatrix();
-     translate(c.imgPosX, c.imgPosY, 0);
+     translate(c.imgPosX, c.imgPosY, c.imgPosZ);
      c.mImgPosX = screenX(0, 0, 0);
-     c.mImgPosY = screenY(0, 0, 0);       
+     c.mImgPosY = screenY(0, 0, 0);  
      popMatrix();
      
-     if((mouseX >= c.mImgPosX && mouseX <= c.mImgPosX+c.cWidth/2 && (mouseY >= c.mImgPosY && mouseY <= c.mImgPosY+c.cHeight/2))) {
+     if((mouseX >= c.mImgPosX && mouseX <= c.mImgPosX+c.cWidth/2 
+     && (mouseY >= c.mImgPosY && mouseY <= c.mImgPosY+c.cHeight/2))) {
        PlayFinalMelody obj = new PlayFinalMelody(constellations.get(star.constellationName));
        obj.start();
      }
