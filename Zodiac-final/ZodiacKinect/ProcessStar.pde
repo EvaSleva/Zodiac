@@ -35,20 +35,16 @@ void ProcessStar(Star star, boolean constellationStar) {
     PVector leftHand = getJointPosition(SimpleOpenNI.SKEL_LEFT_HAND);
     PVector rightHand = getJointPosition(SimpleOpenNI.SKEL_RIGHT_HAND);
     
+    // Get screen coordinates for hands
     float lX = screenX(leftHand.x*USER_SCALE_FACTOR+USER_SHIFT_X, leftHand.y*USER_SCALE_FACTOR+USER_SHIFT_Y, 0);
     float lY = screenY(leftHand.x*USER_SCALE_FACTOR+USER_SHIFT_X, leftHand.y*USER_SCALE_FACTOR+USER_SHIFT_Y, 0);
     float rX = screenX(rightHand.x*USER_SCALE_FACTOR+USER_SHIFT_X, rightHand.y*USER_SCALE_FACTOR+USER_SHIFT_Y, 0);
     float rY = screenY(rightHand.x*USER_SCALE_FACTOR+USER_SHIFT_X, rightHand.y*USER_SCALE_FACTOR+USER_SHIFT_Y, 0);
     
-    
     if(((lX >= (x - TOUCH_MARGIN) && lX <= (x + TOUCH_MARGIN)) 
     && (lY >= (y - TOUCH_MARGIN) && lY <= (y + TOUCH_MARGIN)))
     || ((rX >= (x - TOUCH_MARGIN) && rX <= (x + TOUCH_MARGIN)) 
     && (rY >= (y - TOUCH_MARGIN) && rY <= (y + TOUCH_MARGIN)))) {       
-    
-    // check if mouse touches star
-//    if((mouseX >= (x - TOUCH_MARGIN) && mouseX <= (x + TOUCH_MARGIN)) 
- //   && (mouseY >= (y - TOUCH_MARGIN) && mouseY <= (y + TOUCH_MARGIN))) {
       
       // set to chosen star
       if(previousStar != null) {

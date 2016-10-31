@@ -12,6 +12,7 @@ NetAddress myRemoteLocation;
 NetAddress myRemoteLocationBackground;
 PImage bgImage;
 
+// Constants
 int STAR_COUNT = 50;
 int TOUCH_MARGIN = 50;
 int TOUCH_MARGIN_Z = 300;
@@ -24,19 +25,19 @@ float SCREEN_MARGIN_Y = height*0.1;
 int RANDOM_STAR_NOTE = -39;
 boolean USE_CSV_POSITIONS = true;
 float STAR_TOUCHED_SIZE = 0.3;
-//int USER_SHIFT = -1000;
 int USER_SHIFT_X = -1500;
 int USER_SHIFT_Y = -1500;
 int CONSTELLATION_Z_AXIS_DEPTH = 800;
 int USER_SCALE_FACTOR = 5;
-boolean constellationsDone = false;
+
 
 Star previousStar;
 float rotation = 0;
 int constellationsShown = 0;
 int noOfConstellationsOnScreen = 1;
-final int WAIT_TIME = (int) (10 * 1000); // 3.5 seconds
+final int WAIT_TIME = (int) (10 * 1000); // 10 seconds
 int startTime;
+boolean constellationsDone = false;
 
 Star[] stars = new Star[STAR_COUNT];
 HashMap<String, Constellation> constellations = new HashMap<String, Constellation>();
@@ -144,6 +145,7 @@ void draw() {
         drawImage(c);
         c.showImage = true;
         
+        // Start timer
         constellationsDone = true;
         startTime = millis();
         
@@ -154,9 +156,7 @@ void draw() {
     }
   }
 
-//  rotation = 90;
-  rotation += 0.2;
-//rotation 
+  rotation += 0.1;
 
   // Kinect SimpleOpenNI
   // update the cam
@@ -166,13 +166,12 @@ void draw() {
     drawCurveFigure();
   }
   
+  // Check if time is up, switch constellations
   if (constellationsDone) {
     if(hasFinished()) {
       nextConstellations();
       constellationsDone = false;
-      println(WAIT_TIME/1e3 + " seconds have transpired!");
     }
-    
   }
 }
 
@@ -191,154 +190,3 @@ void keyPressed() {
     solveConstellations();
   }
 }
-
-void nextConstellations() {
-  if (constellationsShown + noOfConstellationsOnScreen <= constellations.size()) {
-      constellationsShown += noOfConstellationsOnScreen;
-    } else {
-      constellationsShown = 0;
-    }     
-
-    // reset all values
-    lines = new ArrayList<Line>();
-
-    Iterator<Entry<String, Constellation>> iter = constellations.entrySet().iterator();     
-    while (iter.hasNext ()) {
-      Entry<String, Constellation> entry = iter.next();
-      entry.getValue().melodyPlayed = false;
-      entry.getValue().complete = false;
-      entry.getValue().showImage = false;
-      entry.getValue().connectionOrder = new ArrayList<Star>();
-      for (int i = 0; i < entry.getValue ().stars.length; i++) {
-        entry.getValue().stars[i].connections = new ArrayList<String>();
-      }
-    }
-}
-
-void solveConstellations() {
-  Iterator<Entry<String, Constellation>> iter = constellations.entrySet().iterator();
-    for (int i = 0; i < constellationsShown; i++) {
-      iter.next();
-    }
-
-    int conCounter = 0;
-
-    while (iter.hasNext ())
-    {
-      if (conCounter < noOfConstellationsOnScreen) {
-        Entry<String, Constellation> entry = iter.next();
-        AddAllLines(entry.getValue());
-        conCounter++;
-      } else {
-        iter.next();
-      }
-    }
-}
-
-
-void drawCurveFigure() {
-
-  pushMatrix();
-  pushStyle();
-//  translate(0, 0, USER_SHIFT);
-  stroke(254, 201, 200);
-  strokeWeight(3);
-  //  smooth();
-  fill(255, 20, 20);
-  drawCircle(getJointPosition(SimpleOpenNI.SKEL_LEFT_HAND));
-  drawCircle(getJointPosition(SimpleOpenNI.SKEL_RIGHT_HAND));
-  noFill();
-
-  beginShape();
-  plotCurveVertexAtJointPosition(SimpleOpenNI.SKEL_HEAD);
-  plotCurveVertexAtJointPosition(SimpleOpenNI.SKEL_HEAD);
-  plotCurveVertexAtJointPosition(SimpleOpenNI.SKEL_NECK);
-  plotCurveVertexAtJointPosition(SimpleOpenNI.SKEL_RIGHT_SHOULDER);
-  plotCurveVertexAtJointPosition(SimpleOpenNI.SKEL_RIGHT_ELBOW);
-  plotCurveVertexAtJointPosition(SimpleOpenNI.SKEL_RIGHT_HAND);
-  plotCurveVertexAtJointPosition(SimpleOpenNI.SKEL_RIGHT_HAND);
-  endShape();
-
-  beginShape();
-  plotCurveVertexAtJointPosition(SimpleOpenNI.SKEL_HEAD);
-  plotCurveVertexAtJointPosition(SimpleOpenNI.SKEL_HEAD);
-  plotCurveVertexAtJointPosition(SimpleOpenNI.SKEL_NECK);
-  plotCurveVertexAtJointPosition(SimpleOpenNI.SKEL_LEFT_SHOULDER);
-  plotCurveVertexAtJointPosition(SimpleOpenNI.SKEL_LEFT_ELBOW);
-  plotCurveVertexAtJointPosition(SimpleOpenNI.SKEL_LEFT_HAND);
-  plotCurveVertexAtJointPosition(SimpleOpenNI.SKEL_LEFT_HAND);
-  endShape();
-
-  beginShape();
-  plotCurveVertexAtJointPosition(SimpleOpenNI.SKEL_NECK);
-  plotCurveVertexAtJointPosition(SimpleOpenNI.SKEL_NECK);
-  plotCurveVertexAtJointPosition(SimpleOpenNI.SKEL_TORSO);
-  plotCurveVertexAtJointPosition(SimpleOpenNI.SKEL_LEFT_HIP);
-  plotCurveVertexAtJointPosition(SimpleOpenNI.SKEL_LEFT_KNEE);
-  plotCurveVertexAtJointPosition(SimpleOpenNI.SKEL_LEFT_FOOT);
-  plotCurveVertexAtJointPosition(SimpleOpenNI.SKEL_LEFT_FOOT);
-  endShape();
-
-  beginShape();
-  plotCurveVertexAtJointPosition(SimpleOpenNI.SKEL_NECK);
-  plotCurveVertexAtJointPosition(SimpleOpenNI.SKEL_NECK);
-  plotCurveVertexAtJointPosition(SimpleOpenNI.SKEL_TORSO);
-  plotCurveVertexAtJointPosition(SimpleOpenNI.SKEL_RIGHT_HIP);
-  plotCurveVertexAtJointPosition(SimpleOpenNI.SKEL_RIGHT_KNEE);
-  plotCurveVertexAtJointPosition(SimpleOpenNI.SKEL_RIGHT_FOOT);
-  plotCurveVertexAtJointPosition(SimpleOpenNI.SKEL_RIGHT_FOOT);
-  endShape();
-
-  noStroke();
-  popMatrix();
-  popStyle();
-}
-
-void plotCurveVertexAtJointPosition(int joint) {
-  PVector jointPositionRealWorld = new PVector();
-  PVector jointPositionProjective = new PVector();
-  context.getJointPositionSkeleton(1, joint, jointPositionRealWorld);
-  context.convertRealWorldToProjective(jointPositionRealWorld, jointPositionProjective);
-
-//  curveVertex(jointPositionProjective.x, jointPositionProjective.y, jointPositionProjective.z);
-    curveVertex(jointPositionProjective.x*USER_SCALE_FACTOR+USER_SHIFT_X, jointPositionProjective.y*USER_SCALE_FACTOR+USER_SHIFT_Y);
-}
-
-PVector getJointPosition(int joint) {
-  PVector jointPositionRealWorld = new PVector();
-  PVector jointPositionProjective = new PVector();
-  context.getJointPositionSkeleton(1, joint, jointPositionRealWorld);
-  context.convertRealWorldToProjective(jointPositionRealWorld, jointPositionProjective);
-
-  return jointPositionProjective;
-}
-
-void drawCircle(PVector position) {
-  pushMatrix();
-//  translate(position.x, position.y, position.z);
-  translate(position.x*USER_SCALE_FACTOR+USER_SHIFT_X, position.y*USER_SCALE_FACTOR+USER_SHIFT_Y);
-  ellipse(0, 0, 40, 40);
-  popMatrix();
-}
-
-// -----------------------------------------------------------------
-// SimpleOpenNI events
-
-void onNewUser(SimpleOpenNI curContext, int userId)
-{
-  println("onNewUser - userId: " + userId);
-  println("\tstart tracking skeleton");
-
-  curContext.startTrackingSkeleton(userId);
-}
-
-void onLostUser(SimpleOpenNI curContext, int userId)
-{
-  println("onLostUser - userId: " + userId);
-}
-
-void onVisibleUser(SimpleOpenNI curContext, int userId)
-{
-  //println("onVisibleUser - userId: " + userId);
-}
-

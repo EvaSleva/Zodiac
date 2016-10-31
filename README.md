@@ -22,6 +22,22 @@ The Zodiac App will offer a 3D dark sky environment that will present the user w
 * Processing Libraries
     - oscP5 | An Open Sound Control (OSC) 
     - SimpleOpenNI version 1.96
+* Kinect version
+    - Open Pure Data sketch and turn up volume in sketch.
+    - Open Processing sketch in Processing 2.
+    - Stand in front of Kinect and wait until it registers the user.
+    - Use hands to touch stars. Connect stars to form a constellation.
+    - The final melody is composed from the order in which you selected the stars.
+    - When constellation is solved, wait 10 seconds until the next appears.
+    - If a keyboard is present, it is also possible to press Enter and ’s’ to skip or solve.
+* Mouse version
+    - Open Pure Data sketch and turn up volume in sketch.
+    - Open Processing sketch. (Looks better in Processing 3)
+    - Use mouse to touch stars. Connect the stars to form a constellation.
+    - Click the solved constellation to play back melody.
+    - Press enter to go to next constellations.
+    - Press ’s’ to solve constellations automatically.
+
 
 ### 4. REFERENCES
 

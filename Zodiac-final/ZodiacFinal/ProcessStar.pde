@@ -1,16 +1,13 @@
 void ProcessStar(Star star, boolean constellationStar) {
   
-  // use different color if star is chosen
+  // Vibrate chosen stars
     if(star.chosen && star.sizeChanged == false) {
-//      star.clr = color(255, 255, 102); 
       star.size = star.size*(100/(100-STAR_TOUCHED_SIZE*100));    
       star.sizeChanged = true;  
     } 
     else {
-//      star.clr = color(255);
      star.size = star.originalSize;
      star.sizeChanged = false;
-
     }    
   
     pushMatrix();

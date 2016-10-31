@@ -18,16 +18,11 @@ void GenerateConstellations() {
     // Get data about constellation
     String conCode = row.getString("CON");
     String conName = row.getString("CONNAME");
-    String conColourHex = row.getString("COLOUR");
-    color conColour =  unhex(conColourHex);  
     float sizeX = row.getFloat("sizeX");
     float sizeY = row.getFloat("sizeY");
     float posX = row.getFloat("posX");
     float posY = row.getFloat("posY");
-    float posZ = random(-1000, 1000);
-    
-    //String pngImageFile = conName.toLowerCase() + ".png";     
-    //PImage image = loadImage(pngImageFile);
+    float posZ = random(-CONSTELLATION_Z_AXIS_DEPTH, CONSTELLATION_Z_AXIS_DEPTH);
     
     String svgImageFile = conName.toLowerCase() + ".svg";     
     PShape image = loadShape(svgImageFile);

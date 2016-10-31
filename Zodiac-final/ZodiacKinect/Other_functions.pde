@@ -50,6 +50,7 @@ void AddLine(Star star1, Star star2, Constellation constellation) {
   }
 }
 
+// add all lines to solve a constellation
 void AddAllLines(Constellation c) {
   println(c.name);
   
@@ -104,7 +105,7 @@ class PlayFinalMelody implements Runnable {
    }
 }
 
-
+// draw the image on the constellation
 void drawImage(Constellation c) {
   fill(200, 200, 200, 50);
   pushMatrix();
@@ -136,6 +137,7 @@ void findImagePosition(Constellation c) {
 }
 
 
+// Play one sound
 void PlaySound(int sound) {
   OscMessage myMessage = new OscMessage("/puredata");
   myMessage.add(sound);
@@ -143,8 +145,54 @@ void PlaySound(int sound) {
 }
 
 
+// start the background sound
 void PlayBackgroundMusic() {
   OscMessage myMessage = new OscMessage("/puredata");
   myMessage.add(1);
   oscP5.send(myMessage, myRemoteLocationBackground); 
+}
+
+// skip to next constellations
+void nextConstellations() {
+  if (constellationsShown + noOfConstellationsOnScreen < constellations.size()) {
+      constellationsShown += noOfConstellationsOnScreen;
+    } else {
+      constellationsShown = 0;
+    }     
+
+    // reset all values
+    lines = new ArrayList<Line>();
+
+    Iterator<Entry<String, Constellation>> iter = constellations.entrySet().iterator();     
+    while (iter.hasNext ()) {
+      Entry<String, Constellation> entry = iter.next();
+      entry.getValue().melodyPlayed = false;
+      entry.getValue().complete = false;
+      entry.getValue().showImage = false;
+      entry.getValue().connectionOrder = new ArrayList<Star>();
+      for (int i = 0; i < entry.getValue ().stars.length; i++) {
+        entry.getValue().stars[i].connections = new ArrayList<String>();
+      }
+    }
+}
+
+// Draw all lines for the constellations of screen
+void solveConstellations() {
+  Iterator<Entry<String, Constellation>> iter = constellations.entrySet().iterator();
+    for (int i = 0; i < constellationsShown; i++) {
+      iter.next();
+    }
+
+    int conCounter = 0;
+
+    while (iter.hasNext ())
+    {
+      if (conCounter < noOfConstellationsOnScreen) {
+        Entry<String, Constellation> entry = iter.next();
+        AddAllLines(entry.getValue());
+        conCounter++;
+      } else {
+        iter.next();
+      }
+    }
 }

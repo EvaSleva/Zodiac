@@ -11,6 +11,7 @@ NetAddress myRemoteLocation;
 NetAddress myRemoteLocationBackground;
 PImage bgImage;
 
+// Constants
 int STAR_COUNT = 50;
 int TOUCH_MARGIN = 5;
 float MAX_STAR_SIZE = 7;
@@ -19,17 +20,18 @@ int CONSTELLATION_STAR_SIZE_MIN = 6;
 int CONSTELLATION_STAR_SIZE_MAX = 8;
 float SCREEN_MARGIN_X = width*0.1;
 float SCREEN_MARGIN_Y = height*0.1;
-int RANDOM_STAR_NOTE = 55;
+int RANDOM_STAR_NOTE = -39;
 boolean USE_CSV_POSITIONS = true;
 float STAR_TOUCHED_SIZE = 0.25;
+int CONSTELLATION_Z_AXIS_DEPTH = 800;
 
 Star previousStar;
 float rotation = 0;
 int constellationsShown = 0;
-int noOfConstellationsOnScreen = 3;
+int noOfConstellationsOnScreen = 2;
 
 Star[] stars = new Star[STAR_COUNT];
-  HashMap<String, Constellation> constellations = new HashMap<String, Constellation>();
+HashMap<String, Constellation> constellations = new HashMap<String, Constellation>();
 ArrayList<Line> lines = new ArrayList<Line>();
 String constellationStarsCSV = "constellations-zodiac.csv";
 String constellationCodesCSV = "constellation-codes-zodiac.csv";
@@ -52,7 +54,6 @@ void setup() {
   GenerateConstellations();
   PlayBackgroundMusic();
 }
-
 
 
 // -----  draw function -----
@@ -81,7 +82,7 @@ void draw() {
    Iterator<Entry<String, Constellation>> iter = constellations.entrySet().iterator();
    for(int i = 0; i < constellationsShown; i++) {
       iter.next();
-    }
+   }
    
    int conCounter = 0;
    
@@ -126,7 +127,7 @@ void draw() {
 void keyPressed() {
   
    if(key == ENTER) {
-     if(constellationsShown + noOfConstellationsOnScreen <= constellations.size()) {
+     if(constellationsShown + noOfConstellationsOnScreen < constellations.size()) {
        constellationsShown += noOfConstellationsOnScreen;
      }
      else {

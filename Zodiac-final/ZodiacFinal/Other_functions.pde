@@ -50,6 +50,7 @@ void AddLine(Star star1, Star star2, Constellation constellation) {
   }
 }
 
+// Add all lines to solve a constellations
 void AddAllLines(Constellation c) {
   println(c.name);
   
@@ -136,6 +137,7 @@ void findImagePosition(Constellation c) {
 }
 
 
+// Play one sound
 void PlaySound(int sound) {
   OscMessage myMessage = new OscMessage("/puredata");
   myMessage.add(sound);
@@ -143,6 +145,7 @@ void PlaySound(int sound) {
 }
 
 
+// Start the background music
 void PlayBackgroundMusic() {
   OscMessage myMessage = new OscMessage("/puredata");
   myMessage.add(1);
