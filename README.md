@@ -2,6 +2,8 @@
 
 ## UTS 32027 Interactive Media (2016 Spring)
 
+YouTube Demo: https://youtu.be/x9tJvQMzi6g
+
 ### 1. TEAM: High Five
     - Dom Svejkar (12213551)
     - Eva Drewsen (12688824)
@@ -35,8 +37,8 @@ The Zodiac App will offer a 3D dark sky environment that will present the user w
     - Open Processing sketch. (Looks better in Processing 3)
     - Use mouse to touch stars. Connect the stars to form a constellation.
     - Click the solved constellation to play back melody.
-    - Press enter to go to next constellations.
-    - Press ’s’ to solve constellations automatically.
+    - Press 'Enter' to go to next constellations.
+    - Press 's' to solve constellations automatically.
 
 
 ### 4. REFERENCES
@@ -49,7 +51,7 @@ The Zodiac App will offer a 3D dark sky environment that will present the user w
 * Background Image: http://www.samsung.com/global/galaxy/galaxy-tab-s2/images/galaxy-tab-s2_feature_your-pick.jpg
 * Zodiac Vectors for SVGs illustrations: http://www.freevectors.net/details/Zodiac
 * Background sound by Sonicfreak on freesound.org: http://freesound.org/people/Sonicfreak/sounds/174450/
-* Stick figure style inspired by Andrew Johnston’s lecture sketch on Kinect usage.
+* Stick figure style inspired by Andrew Johnston’s lecture Sketch on Kinect usage.
 
 
 
