@@ -49,7 +49,7 @@ The Zodiac App will offer a 3D dark sky environment that will present the user w
 * Background Image: http://www.samsung.com/global/galaxy/galaxy-tab-s2/images/galaxy-tab-s2_feature_your-pick.jpg
 * Zodiac Vectors for SVGs illustrations: http://www.freevectors.net/details/Zodiac
 * Background sound by Sonicfreak on freesound.org: http://freesound.org/people/Sonicfreak/sounds/174450/
-
+* Stick figure style inspired by Andrew Johnston’s lecture sketch on Kinect usage.
 
 
 
