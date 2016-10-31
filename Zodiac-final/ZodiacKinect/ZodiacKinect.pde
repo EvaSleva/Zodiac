@@ -13,22 +13,30 @@ NetAddress myRemoteLocationBackground;
 PImage bgImage;
 
 int STAR_COUNT = 50;
-int TOUCH_MARGIN = 100;
+int TOUCH_MARGIN = 50;
 int TOUCH_MARGIN_Z = 300;
-float MAX_STAR_SIZE = 7;
-float MIN_STAR_SIZE = 4;
-int CONSTELLATION_STAR_SIZE_MIN = 6;
-int CONSTELLATION_STAR_SIZE_MAX = 8;
+float MAX_STAR_SIZE = 9;
+float MIN_STAR_SIZE = 6;
+int CONSTELLATION_STAR_SIZE_MIN = 10;
+int CONSTELLATION_STAR_SIZE_MAX = 15;
 float SCREEN_MARGIN_X = width*0.1;
 float SCREEN_MARGIN_Y = height*0.1;
-int RANDOM_STAR_NOTE = 55;
+int RANDOM_STAR_NOTE = -39;
 boolean USE_CSV_POSITIONS = true;
-float STAR_TOUCHED_SIZE = 0.25;
+float STAR_TOUCHED_SIZE = 0.3;
+//int USER_SHIFT = -1000;
+int USER_SHIFT_X = -1500;
+int USER_SHIFT_Y = -1500;
+int CONSTELLATION_Z_AXIS_DEPTH = 800;
+int USER_SCALE_FACTOR = 5;
+boolean constellationsDone = false;
 
 Star previousStar;
 float rotation = 0;
 int constellationsShown = 0;
-int noOfConstellationsOnScreen = 10;
+int noOfConstellationsOnScreen = 1;
+final int WAIT_TIME = (int) (10 * 1000); // 3.5 seconds
+int startTime;
 
 Star[] stars = new Star[STAR_COUNT];
 HashMap<String, Constellation> constellations = new HashMap<String, Constellation>();
@@ -42,8 +50,9 @@ SimpleOpenNI  context;
 // ----- Setup function -----
 
 void setup() {
-  size(1920, 1080, P3D);
+  
   noStroke();
+  background(0);
   bgImage = loadImage("green-bg.jpg");
 
   // intialize network variables
@@ -58,7 +67,7 @@ void setup() {
 
   // Kinect SimpleOpenNI
   context = new SimpleOpenNI(this);
-
+  
   if (context.isInit() == false)
   {
     println("Can't init SimpleOpenNI, maybe the camera is not connected!"); 
@@ -70,6 +79,9 @@ void setup() {
   // enable depthMap generation 
   context.enableDepth();
 
+//  size(context.depthWidth(), context.depthHeight(), P3D);
+  size(1920, 1080, P3D);
+
   // enable skeleton generation for all joints
   context.enableUser();
 }
@@ -79,8 +91,7 @@ void setup() {
 // -----  draw function -----
 
 void draw() {
-  //  background(bgImage);
-  background(0);
+  background(bgImage);
   lights();
 
   // camera rotation
@@ -89,7 +100,7 @@ void draw() {
   float zPos = sin(radians(rotation))*orbitRadius;
 
   camera(xPos, height/2, zPos, 0, 0, 0, 0, 1, 0);
-
+  
   // draw stars
   for (int i = 0; i < STAR_COUNT; i++) {
     ProcessStar(stars[i], false);
@@ -120,7 +131,7 @@ void draw() {
       }
 
       if (c.showImage) {
-        //        drawImage(c);
+        drawImage(c);
       }
 
       // check if constellation is complete
@@ -132,6 +143,10 @@ void draw() {
         c.melodyPlayed = true;
         drawImage(c);
         c.showImage = true;
+        
+        constellationsDone = true;
+        startTime = millis();
+        
       }
       conCounter++;
     } else {
@@ -139,8 +154,9 @@ void draw() {
     }
   }
 
-  //  rotation = PI/4;
-  rotation += 0.1;
+//  rotation = 90;
+  rotation += 0.2;
+//rotation 
 
   // Kinect SimpleOpenNI
   // update the cam
@@ -149,15 +165,35 @@ void draw() {
   if (context.isTrackingSkeleton(1)) {
     drawCurveFigure();
   }
-
   
+  if (constellationsDone) {
+    if(hasFinished()) {
+      nextConstellations();
+      constellationsDone = false;
+      println(WAIT_TIME/1e3 + " seconds have transpired!");
+    }
+    
+  }
+}
+
+boolean hasFinished() {
+  return millis() - startTime > WAIT_TIME;
 }
 
 // Enter for changing constellation, 's' for completing constellation
 void keyPressed() {
 
   if (key == ENTER) {
-    if (constellationsShown + noOfConstellationsOnScreen <= constellations.size()) {
+    nextConstellations();
+  }
+
+  if (key == 's') {
+    solveConstellations();
+  }
+}
+
+void nextConstellations() {
+  if (constellationsShown + noOfConstellationsOnScreen <= constellations.size()) {
       constellationsShown += noOfConstellationsOnScreen;
     } else {
       constellationsShown = 0;
@@ -171,16 +207,16 @@ void keyPressed() {
       Entry<String, Constellation> entry = iter.next();
       entry.getValue().melodyPlayed = false;
       entry.getValue().complete = false;
+      entry.getValue().showImage = false;
       entry.getValue().connectionOrder = new ArrayList<Star>();
       for (int i = 0; i < entry.getValue ().stars.length; i++) {
         entry.getValue().stars[i].connections = new ArrayList<String>();
       }
     }
-  }
+}
 
-
-  if (key == 's') {
-    Iterator<Entry<String, Constellation>> iter = constellations.entrySet().iterator();
+void solveConstellations() {
+  Iterator<Entry<String, Constellation>> iter = constellations.entrySet().iterator();
     for (int i = 0; i < constellationsShown; i++) {
       iter.next();
     }
@@ -197,17 +233,18 @@ void keyPressed() {
         iter.next();
       }
     }
-  }
 }
+
 
 void drawCurveFigure() {
 
   pushMatrix();
-  translate(0, 0, -1000);
-  stroke(255);
-  //  strokeWeight(3);
+  pushStyle();
+//  translate(0, 0, USER_SHIFT);
+  stroke(254, 201, 200);
+  strokeWeight(3);
   //  smooth();
-  fill(255);
+  fill(255, 20, 20);
   drawCircle(getJointPosition(SimpleOpenNI.SKEL_LEFT_HAND));
   drawCircle(getJointPosition(SimpleOpenNI.SKEL_RIGHT_HAND));
   noFill();
@@ -254,6 +291,7 @@ void drawCurveFigure() {
 
   noStroke();
   popMatrix();
+  popStyle();
 }
 
 void plotCurveVertexAtJointPosition(int joint) {
@@ -262,8 +300,8 @@ void plotCurveVertexAtJointPosition(int joint) {
   context.getJointPositionSkeleton(1, joint, jointPositionRealWorld);
   context.convertRealWorldToProjective(jointPositionRealWorld, jointPositionProjective);
 
-  curveVertex(jointPositionProjective.x, jointPositionProjective.y, jointPositionProjective.z);
-  //  curveVertex(jointPositionProjective.x, jointPositionProjective.y);
+//  curveVertex(jointPositionProjective.x, jointPositionProjective.y, jointPositionProjective.z);
+    curveVertex(jointPositionProjective.x*USER_SCALE_FACTOR+USER_SHIFT_X, jointPositionProjective.y*USER_SCALE_FACTOR+USER_SHIFT_Y);
 }
 
 PVector getJointPosition(int joint) {
@@ -277,9 +315,9 @@ PVector getJointPosition(int joint) {
 
 void drawCircle(PVector position) {
   pushMatrix();
-  translate(position.x, position.y, position.z);
-  //  translate(position.x, position.y);
-  ellipse(0, 0, 20, 20);
+//  translate(position.x, position.y, position.z);
+  translate(position.x*USER_SCALE_FACTOR+USER_SHIFT_X, position.y*USER_SCALE_FACTOR+USER_SHIFT_Y);
+  ellipse(0, 0, 40, 40);
   popMatrix();
 }
 

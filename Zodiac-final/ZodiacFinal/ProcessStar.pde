@@ -33,7 +33,8 @@ void ProcessStar(Star star, boolean constellationStar) {
     popMatrix();    
     
     // check if mouse touches star
-    if((mouseX >= (x - TOUCH_MARGIN) && mouseX <= (x + TOUCH_MARGIN)) && (mouseY >= (y - TOUCH_MARGIN) && mouseY <= (y + TOUCH_MARGIN))) {
+    if((mouseX >= (x - TOUCH_MARGIN) && mouseX <= (x + TOUCH_MARGIN)) 
+    && (mouseY >= (y - TOUCH_MARGIN) && mouseY <= (y + TOUCH_MARGIN))) {
       
       // set to chosen star
       if(previousStar != null) {

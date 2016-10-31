@@ -2,12 +2,12 @@ void ProcessStar(Star star, boolean constellationStar) {
   
   // use different color if star is chosen
     if(star.chosen && star.sizeChanged == false) {
-//      star.clr = color(255, 255, 102); 
+      star.clr = color(255, 255,153);
       star.size = star.size*(100/(100-STAR_TOUCHED_SIZE*100));    
       star.sizeChanged = true;  
     } 
     else {
-//      star.clr = color(255);
+      star.clr = color(255);
      star.size = star.originalSize;
      star.sizeChanged = false;
 
@@ -32,12 +32,19 @@ void ProcessStar(Star star, boolean constellationStar) {
     
     popMatrix();    
     
-    PVector position = getJointPosition(SimpleOpenNI.SKEL_LEFT_HAND);
+    PVector leftHand = getJointPosition(SimpleOpenNI.SKEL_LEFT_HAND);
+    PVector rightHand = getJointPosition(SimpleOpenNI.SKEL_RIGHT_HAND);
     
-    if((position.x >= (star.x - TOUCH_MARGIN) && position.x <= (star.x + TOUCH_MARGIN)) 
-    && (position.y >= (star.y - TOUCH_MARGIN) && position.y <= (star.y + TOUCH_MARGIN))
-    && (position.z-1000 >= (star.z - TOUCH_MARGIN_Z) && position.z-1000 <= (star.z + TOUCH_MARGIN_Z))) {   
+    float lX = screenX(leftHand.x*USER_SCALE_FACTOR+USER_SHIFT_X, leftHand.y*USER_SCALE_FACTOR+USER_SHIFT_Y, 0);
+    float lY = screenY(leftHand.x*USER_SCALE_FACTOR+USER_SHIFT_X, leftHand.y*USER_SCALE_FACTOR+USER_SHIFT_Y, 0);
+    float rX = screenX(rightHand.x*USER_SCALE_FACTOR+USER_SHIFT_X, rightHand.y*USER_SCALE_FACTOR+USER_SHIFT_Y, 0);
+    float rY = screenY(rightHand.x*USER_SCALE_FACTOR+USER_SHIFT_X, rightHand.y*USER_SCALE_FACTOR+USER_SHIFT_Y, 0);
     
+    
+    if(((lX >= (x - TOUCH_MARGIN) && lX <= (x + TOUCH_MARGIN)) 
+    && (lY >= (y - TOUCH_MARGIN) && lY <= (y + TOUCH_MARGIN)))
+    || ((rX >= (x - TOUCH_MARGIN) && rX <= (x + TOUCH_MARGIN)) 
+    && (rY >= (y - TOUCH_MARGIN) && rY <= (y + TOUCH_MARGIN)))) {       
     
     // check if mouse touches star
 //    if((mouseX >= (x - TOUCH_MARGIN) && mouseX <= (x + TOUCH_MARGIN)) 
@@ -84,12 +91,13 @@ void ProcessStar(Star star, boolean constellationStar) {
      Constellation c = constellations.get(star.constellationName); 
      
      pushMatrix();
-     translate(c.imgPosX, c.imgPosY, 0);
+     translate(c.imgPosX, c.imgPosY, c.imgPosZ);
      c.mImgPosX = screenX(0, 0, 0);
      c.mImgPosY = screenY(0, 0, 0);       
      popMatrix();
      
-     if((mouseX >= c.mImgPosX && mouseX <= c.mImgPosX+c.cWidth/2 && (mouseY >= c.mImgPosY && mouseY <= c.mImgPosY+c.cHeight/2))) {
+     if((mouseX >= c.mImgPosX && mouseX <= c.mImgPosX+c.cWidth/2 
+     && (mouseY >= c.mImgPosY && mouseY <= c.mImgPosY+c.cHeight/2))) {
        PlayFinalMelody obj = new PlayFinalMelody(constellations.get(star.constellationName));
        obj.start();
      }

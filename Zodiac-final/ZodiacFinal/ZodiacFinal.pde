@@ -26,7 +26,7 @@ float STAR_TOUCHED_SIZE = 0.25;
 Star previousStar;
 float rotation = 0;
 int constellationsShown = 0;
-int noOfConstellationsOnScreen = 1;
+int noOfConstellationsOnScreen = 3;
 
 Star[] stars = new Star[STAR_COUNT];
   HashMap<String, Constellation> constellations = new HashMap<String, Constellation>();
