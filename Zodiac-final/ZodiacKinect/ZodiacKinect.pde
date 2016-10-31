@@ -22,7 +22,7 @@ int CONSTELLATION_STAR_SIZE_MIN = 10;
 int CONSTELLATION_STAR_SIZE_MAX = 15;
 float SCREEN_MARGIN_X = width*0.1;
 float SCREEN_MARGIN_Y = height*0.1;
-int RANDOM_STAR_NOTE = -39;
+int RANDOM_STAR_NOTE = -21;
 boolean USE_CSV_POSITIONS = true;
 float STAR_TOUCHED_SIZE = 0.3;
 int USER_SHIFT_X = -1500;
@@ -46,7 +46,7 @@ String constellationStarsCSV = "constellations-zodiac.csv";
 String constellationCodesCSV = "constellation-codes-zodiac.csv";
 
 SimpleOpenNI  context;
-//boolean       autoCalib=true;
+boolean       autoCalib=true;
 
 // ----- Setup function -----
 
